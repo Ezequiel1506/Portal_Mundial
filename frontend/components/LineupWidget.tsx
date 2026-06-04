@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Users } from 'lucide-react';
 
 interface Player {
-  name: str;
+  name: string;
   number: number;
 }
 
