@@ -34,9 +34,9 @@ def calcular_probabilidades_partido(elo_home, elo_away, xg_home, xg_away, descan
 
     # 2. Normalizamos las probabilidades generales para que sumen exactamente 100%
     total_prob = prob_local_gana + prob_visitante_gana + prob_empate
-    home_win = round((prob_local_gana / total_prob) * 100, 1)
-    away_win = round((prob_visitante_gana / total_prob) * 100, 1)
-    draw = round((prob_empate / total_prob) * 100, 1)
+    home_win = round(prob_local_gana / total_prob, 3)
+    away_win = round(prob_visitante_gana / total_prob, 3)
+    draw = round(prob_empate / total_prob, 3)
 
     # 3. Ordenamos la lista de marcadores de MAYOR a MENOR probabilidad y sacamos los 3 primeros
     probabilidades_marcadores.sort(key=lambda x: x["probabilidad"], reverse=True)
