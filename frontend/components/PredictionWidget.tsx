@@ -1,5 +1,7 @@
 import React from 'react';
-import { BarChart3, Target, BrainCircuit } from 'lucide-react';
+import { BarChart3, Target, BrainCircuit, Activity } from 'lucide-react';
+// IMPORTANTE: Recuperamos los componentes del gráfico de radar
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend } from 'recharts';
 
 export default function PredictionWidget({ data, homeTeam, awayTeam }: { data: any, homeTeam: string, awayTeam: string }) {
   if (!data) return null;
@@ -10,7 +12,6 @@ export default function PredictionWidget({ data, homeTeam, awayTeam }: { data: a
   const xgHome = data.expected_goals.home_xG;
   const xgAway = data.expected_goals.away_xG;
 
-  // Diccionario interno de figuras clave para darle realismo al texto
   const JUGADORES_CLAVE: Record<string, string> = {
     "Argentina": "Lionel Messi y la jerarquía de su ataque",
     "France": "Kylian Mbappé",
@@ -62,8 +63,18 @@ export default function PredictionWidget({ data, homeTeam, awayTeam }: { data: a
     return texto;
   };
 
+  // Mapeamos los datos del backend para el gráfico de Radar
+  const radarData = [
+    { subject: 'Histórico (Elo)', home: data.radar_metrics.home[0], away: data.radar_metrics.away[0] },
+    { subject: 'Ataque (xG)', home: data.radar_metrics.home[1], away: data.radar_metrics.away[1] },
+    { subject: 'Físico', home: data.radar_metrics.home[2], away: data.radar_metrics.away[2] },
+    { subject: 'Táctica', home: data.radar_metrics.home[3], away: data.radar_metrics.away[3] },
+    { subject: 'Defensa', home: data.radar_metrics.home[4], away: data.radar_metrics.away[4] }
+  ];
+
   return (
     <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl mt-6">
+      
       {/* Título Principal */}
       <div className="flex items-center gap-3 mb-6">
         <BarChart3 className="text-blue-400 w-6 h-6" />
@@ -86,10 +97,8 @@ export default function PredictionWidget({ data, homeTeam, awayTeam }: { data: a
         </div>
       </div>
 
-      {/* RECONSTRUCCIÓN: Grilla de dos columnas paralelas (Los dos cuadritos) */}
+      {/* Grilla de Tarjetas (Marcadores y Narrativa) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-slate-800/60 pt-6">
-        
-        {/* Cuadrito Izquierdo: Marcadores */}
         <div className="bg-slate-950 border border-slate-850 p-5 rounded-xl flex flex-col justify-between shadow-md">
           <p className="text-xs text-slate-500 font-bold tracking-widest mb-4 uppercase flex items-center gap-2">
             <Target className="w-4 h-4 text-blue-400" /> Resultados Más Probables
@@ -103,7 +112,6 @@ export default function PredictionWidget({ data, homeTeam, awayTeam }: { data: a
           </div>
         </div>
 
-        {/* Cuadrito Derecho RESTAURADO: Análisis Dinámico */}
         <div className="bg-slate-950 border border-slate-850 p-5 rounded-xl flex flex-col justify-between shadow-md">
           <p className="text-xs text-slate-500 font-bold tracking-widest mb-4 uppercase flex items-center gap-2">
             <BrainCircuit className="w-4 h-4 text-emerald-400" /> Justificación de la IA
@@ -112,8 +120,51 @@ export default function PredictionWidget({ data, homeTeam, awayTeam }: { data: a
             {generateNarrative()}
           </p>
         </div>
-
       </div>
+
+      {/* GRÁFICO DE RADAR RESTAURADO */}
+      <div className="mt-6 bg-slate-950 border border-slate-850 p-6 rounded-xl shadow-md">
+        <p className="text-xs text-slate-500 font-bold tracking-widest mb-6 uppercase flex items-center justify-center gap-2">
+          <Activity className="w-4 h-4 text-purple-400" /> Comparativa de Fuerzas
+        </p>
+        
+        <div className="h-72 w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <RadarChart cx="50%" cy="50%" outerRadius="75%" data={radarData}>
+              {/* Las líneas del hexágono */}
+              <PolarGrid stroke="#334155" />
+              {/* Las etiquetas (Táctica, Físico, etc.) */}
+              <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 12, fontWeight: 600 }} />
+              {/* Ocultamos los números del eje para dejarlo limpio */}
+              <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
+              
+              {/* Polígono del Equipo Local (Azul) */}
+              <Radar 
+                name={homeTeam} 
+                dataKey="home" 
+                stroke="#3b82f6" 
+                fill="#3b82f6" 
+                fillOpacity={0.4} 
+              />
+              {/* Polígono del Equipo Visitante (Rojo) */}
+              <Radar 
+                name={awayTeam} 
+                dataKey="away" 
+                stroke="#ef4444" 
+                fill="#ef4444" 
+                fillOpacity={0.4} 
+              />
+              
+              {/* Leyenda con los nombres de los equipos */}
+              <Legend 
+                wrapperStyle={{ paddingTop: '20px', fontSize: '13px', fontWeight: 'bold' }} 
+                iconType="circle" 
+              />
+            </RadarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
     </div>
   );
 }
