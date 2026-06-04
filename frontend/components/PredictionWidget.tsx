@@ -1,105 +1,119 @@
-"use client";
-
 import React from 'react';
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from 'recharts';
-import { Zap, Target, Activity } from 'lucide-react';
+import { BarChart3, Target } from 'lucide-react';
 
-// Tipamos las props basándonos en el JSON que diseñamos en FastAPI
-interface PredictionProps {
-  data: {
-    probabilities: { home_win: number; draw: number; away_win: number };
-    most_likely_scores: string[];
-    expected_goals: { home_xG: number; away_xG: number };
-    key_factors: string[];
-    radar_metrics: { home: number[]; away: number[] };
+export default function PredictionWidget({ data, homeTeam, awayTeam }: { data: any, homeTeam: string, awayTeam: string }) {
+  if (!data) return null;
+
+  // Extraemos los datos crudos del motor de Python
+  const pHome = data.probabilities.home_win;
+  const pDraw = data.probabilities.draw;
+  const pAway = data.probabilities.away_win;
+  const xgHome = data.expected_goals.home_xG;
+  const xgAway = data.expected_goals.away_xG;
+
+  // Diccionario interno de figuras clave para darle realismo al texto
+  const JUGADORES_CLAVE: Record<string, string> = {
+    "Argentina": "Lionel Messi y la jerarquía de su ataque",
+    "France": "Kylian Mbappé",
+    "Brazil": "Vinícius Júnior",
+    "England": "Jude Bellingham",
+    "Portugal": "Rafael Leão",
+    "Spain": "Lamine Yamal",
+    "Germany": "Jamal Musiala",
+    "Senegal": "Sadio Mané",
+    "Uruguay": "Federico Valverde",
+    "Colombia": "Luis Díaz",
+    "Netherlands": "Xavi Simons",
+    "Italy": "Nicolò Barella",
+    "Belgium": "Kevin De Bruyne",
+    "Croatia": "Luka Modrić"
   };
-  homeTeam: string;
-  awayTeam: string;
-}
 
-export default function PredictionWidget({ data, homeTeam, awayTeam }: PredictionProps) {
-  // 1. Preparamos los datos para el gráfico de Radar de Recharts
-  const radarData = [
-    { subject: 'Histórico (Elo)', A: data.radar_metrics.home[0], B: data.radar_metrics.away[0], fullMark: 100 },
-    { subject: 'Ataque (xG)', A: data.radar_metrics.home[1], B: data.radar_metrics.away[1], fullMark: 100 },
-    { subject: 'Físico', A: data.radar_metrics.home[2], B: data.radar_metrics.away[2], fullMark: 100 },
-    { subject: 'Táctica', A: data.radar_metrics.home[3], B: data.radar_metrics.away[3], fullMark: 100 },
-    { subject: 'Defensa', A: data.radar_metrics.home[4], B: data.radar_metrics.away[4], fullMark: 100 },
-  ];
+  // El "Cerebro Narrativo": Construye un párrafo basándose en los números
+  const generateNarrative = () => {
+    const diff = Math.abs(pHome - pAway);
+    let texto = "";
+    let favorite = "";
+
+    // 1. Detección de partido parejo
+    if (diff < 0.10) { // Menos de 10% de diferencia
+      return `Un duelo sumamente parejo y táctico. Las métricas proyectan una paridad casi absoluta (xG de ${xgHome} vs ${xgAway}). El encuentro podría definirse por destellos individuales, errores defensivos mínimos o la eficacia en las jugadas de pelota parada.`;
+    }
+
+    // 2. Análisis si gana el Local
+    if (pHome > pAway) {
+      favorite = homeTeam;
+      if (pHome > 0.55) { // Supera el 55% de probabilidad
+        texto = `Jerarquía pura. ${homeTeam} llega como gran candidato para llevarse el partido con un dominio abrumador en los papeles. Se espera que impongan su ritmo y asedien el área rival, obligando a ${awayTeam} a replegarse y depender del contragolpe. `;
+      } else {
+        texto = `Ligeramente a favor de ${homeTeam}. Aunque tienen ventaja en las métricas de poder ofensivo, ${awayTeam} no será un rival fácil y tiene herramientas suficientes para trabar el mediocampo y buscar la sorpresa. `;
+      }
+    } 
+    // 3. Análisis si gana el Visitante
+    else {
+      favorite = awayTeam;
+      if (pAway > 0.55) {
+        texto = `Pese a la localía nominal, ${awayTeam} llega con una superioridad aplastante. Su volumen de juego esperado sugiere que tomarán las riendas del partido desde el minuto cero ante un ${homeTeam} que buscará sobrevivir defensivamente. `;
+      } else {
+        texto = `${awayTeam} llega con un leve favoritismo. Deberán imponer su ritmo frente a un ${homeTeam} que promete dar pelea, cerrar los espacios en defensa y aprovechar las transiciones rápidas. `;
+      }
+    }
+
+    // 4. Inyección de Jugadores Clave
+    if (JUGADORES_CLAVE[favorite]) {
+      texto += `La capacidad de desequilibrio de ${JUGADORES_CLAVE[favorite]} será la llave principal para abrir la defensa rival y justificar este pronóstico.`;
+    } else {
+      texto += `El juego colectivo y la efectividad en el último cuarto de cancha serán determinantes para confirmar esta predicción matemática.`;
+    }
+
+    return texto;
+  };
 
   return (
-    <div className="bg-slate-900 text-white p-6 rounded-2xl shadow-xl max-w-4xl mx-auto border border-slate-800">
-      <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-        <Zap className="text-yellow-400" />
-        IA Predictor Analysis
-      </h2>
+    <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl mt-6">
+      <div className="flex items-center gap-3 mb-6">
+        <BarChart3 className="text-blue-400 w-6 h-6" />
+        <h3 className="text-white font-bold text-xl">IA Predictor Analysis</h3>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* COLUMNA IZQUIERDA: Probabilidades y Goles */}
-        <div className="space-y-6">
-          {/* Barras de Probabilidad (Hechas puramente con Tailwind) */}
-          <div>
-            <h3 className="text-slate-400 text-sm uppercase tracking-wider mb-3">Probabilidad de Victoria</h3>
-            <div className="flex h-8 rounded-full overflow-hidden text-xs font-bold text-center border border-slate-700">
-              <div style={{ width: `${data.probabilities.home_win * 100}%` }} className="bg-blue-500 flex items-center justify-center">
-                {homeTeam} {(data.probabilities.home_win * 100).toFixed(0)}%
-              </div>
-              <div style={{ width: `${data.probabilities.draw * 100}%` }} className="bg-slate-500 flex items-center justify-center">
-                EMPATE {(data.probabilities.draw * 100).toFixed(0)}%
-              </div>
-              <div style={{ width: `${data.probabilities.away_win * 100}%` }} className="bg-red-500 flex items-center justify-center">
-                {awayTeam} {(data.probabilities.away_win * 100).toFixed(0)}%
-              </div>
-            </div>
+      <div className="mb-8">
+        <p className="text-xs text-slate-500 font-bold tracking-widest mb-3 uppercase">Probabilidad de Victoria</p>
+        <div className="flex h-8 rounded-lg overflow-hidden font-bold text-xs text-white shadow-inner">
+          <div style={{ width: `${(pHome * 100).toFixed(1)}%` }} className="bg-blue-500 flex items-center justify-center transition-all duration-1000">
+            {pHome > 0.1 && `${homeTeam} ${(pHome * 100).toFixed(0)}%`}
           </div>
-
-          {/* Marcadores Exactos */}
-          <div>
-            <h3 className="text-slate-400 text-sm uppercase tracking-wider mb-3 flex items-center gap-2">
-              <Target size={16} /> Resultados Más Probables
-            </h3>
-            <div className="flex gap-3">
-              {data.most_likely_scores.map((score, index) => (
-                <div key={index} className="bg-slate-800 px-4 py-2 rounded-lg font-mono text-xl border border-slate-700">
-                  {score}
-                </div>
-              ))}
-            </div>
+          <div style={{ width: `${(pDraw * 100).toFixed(1)}%` }} className="bg-slate-500 flex items-center justify-center transition-all duration-1000">
+            {pDraw > 0.1 && `EMPATE ${(pDraw * 100).toFixed(0)}%`}
           </div>
+          <div style={{ width: `${(pAway * 100).toFixed(1)}%` }} className="bg-red-500 flex items-center justify-center transition-all duration-1000">
+            {pAway > 0.1 && `${awayTeam} ${(pAway * 100).toFixed(0)}%`}
+          </div>
+        </div>
+      </div>
 
-          {/* Factores Clave */}
-          <div>
-            <h3 className="text-slate-400 text-sm uppercase tracking-wider mb-3 flex items-center gap-2">
-              <Activity size={16} /> Factores Clave (Motor Lógico)
-            </h3>
-            <ul className="space-y-2">
-              {data.key_factors.map((factor, index) => (
-                <li key={index} className="text-sm bg-slate-800/50 p-3 rounded border-l-4 border-blue-500">
-                  {factor}
-                </li>
-              ))}
-            </ul>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-slate-800 pt-6">
+        <div>
+          <p className="text-xs text-slate-500 font-bold tracking-widest mb-4 uppercase flex items-center gap-2">
+            <Target className="w-4 h-4" /> Resultados Más Probables
+          </p>
+          <div className="flex gap-3">
+            {data.most_likely_scores.map((score: string, i: number) => (
+              <div key={i} className="bg-slate-950 border border-slate-700 px-5 py-3 rounded-xl font-mono text-xl font-bold text-white shadow-lg text-center flex-1">
+                {score}
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* COLUMNA DERECHA: Gráfico de Radar */}
-        <div className="bg-slate-800 rounded-xl p-4 flex flex-col items-center justify-center border border-slate-700">
-          <h3 className="text-slate-400 text-sm uppercase tracking-wider mb-2">Comparativa de Fuerzas</h3>
-          <div className="w-full h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarData}>
-                <PolarGrid stroke="#334155" />
-                <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 12 }} />
-                <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
-                <Radar name={homeTeam} dataKey="A" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.4} />
-                <Radar name={awayTeam} dataKey="B" stroke="#ef4444" fill="#ef4444" fillOpacity={0.4} />
-                <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px' }} />
-              </RadarChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="flex gap-4 mt-2 text-sm font-bold">
-            <span className="text-blue-500">● {homeTeam}</span>
-            <span className="text-red-500">● {awayTeam}</span>
+        {/* REEMPLAZAMOS LA LISTA POR EL MOTOR NARRATIVO */}
+        <div>
+           <p className="text-xs text-slate-500 font-bold tracking-widest mb-4 uppercase flex items-center gap-2">
+            ⚽ Justificación Táctica
+          </p>
+          <div className="bg-slate-950/50 border border-slate-800 p-4 rounded-xl h-full">
+            <p className="text-sm text-slate-300 leading-relaxed">
+              {generateNarrative()}
+            </p>
           </div>
         </div>
       </div>
