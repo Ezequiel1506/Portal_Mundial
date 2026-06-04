@@ -1,0 +1,851 @@
+{
+    "Group A": {
+        "group_name": "Grupo A",
+        "standings": [
+            {
+                "team": "Netherlands",
+                "played": 3,
+                "won": 2,
+                "drawn": 1,
+                "lost": 0,
+                "gf": 5,
+                "ga": 1,
+                "gd": 4,
+                "points": 7
+            },
+            {
+                "team": "Senegal",
+                "played": 3,
+                "won": 2,
+                "drawn": 0,
+                "lost": 1,
+                "gf": 5,
+                "ga": 4,
+                "gd": 1,
+                "points": 6
+            },
+            {
+                "team": "Ecuador",
+                "played": 3,
+                "won": 1,
+                "drawn": 1,
+                "lost": 1,
+                "gf": 4,
+                "ga": 3,
+                "gd": 1,
+                "points": 4
+            },
+            {
+                "team": "Qatar",
+                "played": 3,
+                "won": 0,
+                "drawn": 0,
+                "lost": 3,
+                "gf": 1,
+                "ga": 7,
+                "gd": -6,
+                "points": 0
+            }
+        ],
+        "matches": [
+            {
+                "id": "w2026-855736",
+                "home_team": "Qatar",
+                "away_team": "Ecuador",
+                "date": "2022-11-20",
+                "status": "finished",
+                "home_score": 0,
+                "away_score": 2
+            },
+            {
+                "id": "w2026-855734",
+                "home_team": "Senegal",
+                "away_team": "Netherlands",
+                "date": "2022-11-21",
+                "status": "finished",
+                "home_score": 0,
+                "away_score": 2
+            },
+            {
+                "id": "w2026-855747",
+                "home_team": "Qatar",
+                "away_team": "Senegal",
+                "date": "2022-11-25",
+                "status": "finished",
+                "home_score": 1,
+                "away_score": 3
+            },
+            {
+                "id": "w2026-855748",
+                "home_team": "Netherlands",
+                "away_team": "Ecuador",
+                "date": "2022-11-25",
+                "status": "finished",
+                "home_score": 1,
+                "away_score": 1
+            },
+            {
+                "id": "w2026-855760",
+                "home_team": "Netherlands",
+                "away_team": "Qatar",
+                "date": "2022-11-29",
+                "status": "finished",
+                "home_score": 2,
+                "away_score": 0
+            },
+            {
+                "id": "w2026-855761",
+                "home_team": "Ecuador",
+                "away_team": "Senegal",
+                "date": "2022-11-29",
+                "status": "finished",
+                "home_score": 1,
+                "away_score": 2
+            }
+        ]
+    },
+    "Group B": {
+        "group_name": "Grupo B",
+        "standings": [
+            {
+                "team": "England",
+                "played": 3,
+                "won": 2,
+                "drawn": 1,
+                "lost": 0,
+                "gf": 9,
+                "ga": 2,
+                "gd": 7,
+                "points": 7
+            },
+            {
+                "team": "USA",
+                "played": 3,
+                "won": 1,
+                "drawn": 2,
+                "lost": 0,
+                "gf": 2,
+                "ga": 1,
+                "gd": 1,
+                "points": 5
+            },
+            {
+                "team": "Iran",
+                "played": 3,
+                "won": 1,
+                "drawn": 0,
+                "lost": 2,
+                "gf": 4,
+                "ga": 7,
+                "gd": -3,
+                "points": 3
+            },
+            {
+                "team": "Wales",
+                "played": 3,
+                "won": 0,
+                "drawn": 1,
+                "lost": 2,
+                "gf": 1,
+                "ga": 6,
+                "gd": -5,
+                "points": 1
+            }
+        ],
+        "matches": [
+            {
+                "id": "w2026-855735",
+                "home_team": "England",
+                "away_team": "Iran",
+                "date": "2022-11-21",
+                "status": "finished",
+                "home_score": 6,
+                "away_score": 2
+            },
+            {
+                "id": "w2026-866681",
+                "home_team": "USA",
+                "away_team": "Wales",
+                "date": "2022-11-21",
+                "status": "finished",
+                "home_score": 1,
+                "away_score": 1
+            },
+            {
+                "id": "w2026-866682",
+                "home_team": "Wales",
+                "away_team": "Iran",
+                "date": "2022-11-25",
+                "status": "finished",
+                "home_score": 0,
+                "away_score": 2
+            },
+            {
+                "id": "w2026-855749",
+                "home_team": "England",
+                "away_team": "USA",
+                "date": "2022-11-25",
+                "status": "finished",
+                "home_score": 0,
+                "away_score": 0
+            },
+            {
+                "id": "w2026-855762",
+                "home_team": "Iran",
+                "away_team": "USA",
+                "date": "2022-11-29",
+                "status": "finished",
+                "home_score": 0,
+                "away_score": 1
+            },
+            {
+                "id": "w2026-866683",
+                "home_team": "Wales",
+                "away_team": "England",
+                "date": "2022-11-29",
+                "status": "finished",
+                "home_score": 0,
+                "away_score": 3
+            }
+        ]
+    },
+    "Group C": {
+        "group_name": "Grupo C",
+        "standings": [
+            {
+                "team": "Argentina",
+                "played": 3,
+                "won": 2,
+                "drawn": 0,
+                "lost": 1,
+                "gf": 5,
+                "ga": 2,
+                "gd": 3,
+                "points": 6
+            },
+            {
+                "team": "Poland",
+                "played": 3,
+                "won": 1,
+                "drawn": 1,
+                "lost": 1,
+                "gf": 2,
+                "ga": 2,
+                "gd": 0,
+                "points": 4
+            },
+            {
+                "team": "Mexico",
+                "played": 3,
+                "won": 1,
+                "drawn": 1,
+                "lost": 1,
+                "gf": 2,
+                "ga": 3,
+                "gd": -1,
+                "points": 4
+            },
+            {
+                "team": "Saudi Arabia",
+                "played": 3,
+                "won": 1,
+                "drawn": 0,
+                "lost": 2,
+                "gf": 3,
+                "ga": 5,
+                "gd": -2,
+                "points": 3
+            }
+        ],
+        "matches": [
+            {
+                "id": "w2026-855737",
+                "home_team": "Argentina",
+                "away_team": "Saudi Arabia",
+                "date": "2022-11-22",
+                "status": "finished",
+                "home_score": 1,
+                "away_score": 2
+            },
+            {
+                "id": "w2026-855739",
+                "home_team": "Mexico",
+                "away_team": "Poland",
+                "date": "2022-11-22",
+                "status": "finished",
+                "home_score": 0,
+                "away_score": 0
+            },
+            {
+                "id": "w2026-855750",
+                "home_team": "Poland",
+                "away_team": "Saudi Arabia",
+                "date": "2022-11-26",
+                "status": "finished",
+                "home_score": 2,
+                "away_score": 0
+            },
+            {
+                "id": "w2026-855752",
+                "home_team": "Argentina",
+                "away_team": "Mexico",
+                "date": "2022-11-26",
+                "status": "finished",
+                "home_score": 2,
+                "away_score": 0
+            },
+            {
+                "id": "w2026-855765",
+                "home_team": "Saudi Arabia",
+                "away_team": "Mexico",
+                "date": "2022-11-30",
+                "status": "finished",
+                "home_score": 1,
+                "away_score": 2
+            },
+            {
+                "id": "w2026-855764",
+                "home_team": "Poland",
+                "away_team": "Argentina",
+                "date": "2022-11-30",
+                "status": "finished",
+                "home_score": 0,
+                "away_score": 2
+            }
+        ]
+    },
+    "Group D": {
+        "group_name": "Grupo D",
+        "standings": [
+            {
+                "team": "France",
+                "played": 3,
+                "won": 2,
+                "drawn": 0,
+                "lost": 1,
+                "gf": 6,
+                "ga": 3,
+                "gd": 3,
+                "points": 6
+            },
+            {
+                "team": "Australia",
+                "played": 3,
+                "won": 2,
+                "drawn": 0,
+                "lost": 1,
+                "gf": 3,
+                "ga": 4,
+                "gd": -1,
+                "points": 6
+            },
+            {
+                "team": "Tunisia",
+                "played": 3,
+                "won": 1,
+                "drawn": 1,
+                "lost": 1,
+                "gf": 1,
+                "ga": 1,
+                "gd": 0,
+                "points": 4
+            },
+            {
+                "team": "Denmark",
+                "played": 3,
+                "won": 0,
+                "drawn": 1,
+                "lost": 2,
+                "gf": 1,
+                "ga": 3,
+                "gd": -2,
+                "points": 1
+            }
+        ],
+        "matches": [
+            {
+                "id": "w2026-855738",
+                "home_team": "Denmark",
+                "away_team": "Tunisia",
+                "date": "2022-11-22",
+                "status": "finished",
+                "home_score": 0,
+                "away_score": 0
+            },
+            {
+                "id": "w2026-871850",
+                "home_team": "France",
+                "away_team": "Australia",
+                "date": "2022-11-22",
+                "status": "finished",
+                "home_score": 4,
+                "away_score": 1
+            },
+            {
+                "id": "w2026-871852",
+                "home_team": "Tunisia",
+                "away_team": "Australia",
+                "date": "2022-11-26",
+                "status": "finished",
+                "home_score": 0,
+                "away_score": 1
+            },
+            {
+                "id": "w2026-855751",
+                "home_team": "France",
+                "away_team": "Denmark",
+                "date": "2022-11-26",
+                "status": "finished",
+                "home_score": 2,
+                "away_score": 1
+            },
+            {
+                "id": "w2026-871854",
+                "home_team": "Australia",
+                "away_team": "Denmark",
+                "date": "2022-11-30",
+                "status": "finished",
+                "home_score": 1,
+                "away_score": 0
+            },
+            {
+                "id": "w2026-855763",
+                "home_team": "Tunisia",
+                "away_team": "France",
+                "date": "2022-11-30",
+                "status": "finished",
+                "home_score": 1,
+                "away_score": 0
+            }
+        ]
+    },
+    "Group E": {
+        "group_name": "Grupo E",
+        "standings": [
+            {
+                "team": "Japan",
+                "played": 3,
+                "won": 2,
+                "drawn": 0,
+                "lost": 1,
+                "gf": 4,
+                "ga": 3,
+                "gd": 1,
+                "points": 6
+            },
+            {
+                "team": "Spain",
+                "played": 3,
+                "won": 1,
+                "drawn": 1,
+                "lost": 1,
+                "gf": 9,
+                "ga": 3,
+                "gd": 6,
+                "points": 4
+            },
+            {
+                "team": "Germany",
+                "played": 3,
+                "won": 1,
+                "drawn": 1,
+                "lost": 1,
+                "gf": 6,
+                "ga": 5,
+                "gd": 1,
+                "points": 4
+            },
+            {
+                "team": "Costa Rica",
+                "played": 3,
+                "won": 1,
+                "drawn": 0,
+                "lost": 2,
+                "gf": 3,
+                "ga": 11,
+                "gd": -8,
+                "points": 3
+            }
+        ],
+        "matches": [
+            {
+                "id": "w2026-855741",
+                "home_team": "Germany",
+                "away_team": "Japan",
+                "date": "2022-11-23",
+                "status": "finished",
+                "home_score": 1,
+                "away_score": 2
+            },
+            {
+                "id": "w2026-871851",
+                "home_team": "Spain",
+                "away_team": "Costa Rica",
+                "date": "2022-11-23",
+                "status": "finished",
+                "home_score": 7,
+                "away_score": 0
+            },
+            {
+                "id": "w2026-871853",
+                "home_team": "Japan",
+                "away_team": "Costa Rica",
+                "date": "2022-11-27",
+                "status": "finished",
+                "home_score": 0,
+                "away_score": 1
+            },
+            {
+                "id": "w2026-855755",
+                "home_team": "Spain",
+                "away_team": "Germany",
+                "date": "2022-11-27",
+                "status": "finished",
+                "home_score": 1,
+                "away_score": 1
+            },
+            {
+                "id": "w2026-855768",
+                "home_team": "Japan",
+                "away_team": "Spain",
+                "date": "2022-12-01",
+                "status": "finished",
+                "home_score": 2,
+                "away_score": 1
+            },
+            {
+                "id": "w2026-871855",
+                "home_team": "Costa Rica",
+                "away_team": "Germany",
+                "date": "2022-12-01",
+                "status": "finished",
+                "home_score": 2,
+                "away_score": 4
+            }
+        ]
+    },
+    "Group F": {
+        "group_name": "Grupo F",
+        "standings": [
+            {
+                "team": "Morocco",
+                "played": 3,
+                "won": 2,
+                "drawn": 1,
+                "lost": 0,
+                "gf": 4,
+                "ga": 1,
+                "gd": 3,
+                "points": 7
+            },
+            {
+                "team": "Croatia",
+                "played": 3,
+                "won": 1,
+                "drawn": 2,
+                "lost": 0,
+                "gf": 4,
+                "ga": 1,
+                "gd": 3,
+                "points": 5
+            },
+            {
+                "team": "Belgium",
+                "played": 3,
+                "won": 1,
+                "drawn": 1,
+                "lost": 1,
+                "gf": 1,
+                "ga": 2,
+                "gd": -1,
+                "points": 4
+            },
+            {
+                "team": "Canada",
+                "played": 3,
+                "won": 0,
+                "drawn": 0,
+                "lost": 3,
+                "gf": 2,
+                "ga": 7,
+                "gd": -5,
+                "points": 0
+            }
+        ],
+        "matches": [
+            {
+                "id": "w2026-855740",
+                "home_team": "Morocco",
+                "away_team": "Croatia",
+                "date": "2022-11-23",
+                "status": "finished",
+                "home_score": 0,
+                "away_score": 0
+            },
+            {
+                "id": "w2026-855742",
+                "home_team": "Belgium",
+                "away_team": "Canada",
+                "date": "2022-11-23",
+                "status": "finished",
+                "home_score": 1,
+                "away_score": 0
+            },
+            {
+                "id": "w2026-855753",
+                "home_team": "Belgium",
+                "away_team": "Morocco",
+                "date": "2022-11-27",
+                "status": "finished",
+                "home_score": 0,
+                "away_score": 2
+            },
+            {
+                "id": "w2026-855754",
+                "home_team": "Croatia",
+                "away_team": "Canada",
+                "date": "2022-11-27",
+                "status": "finished",
+                "home_score": 4,
+                "away_score": 1
+            },
+            {
+                "id": "w2026-855766",
+                "home_team": "Croatia",
+                "away_team": "Belgium",
+                "date": "2022-12-01",
+                "status": "finished",
+                "home_score": 0,
+                "away_score": 0
+            },
+            {
+                "id": "w2026-855767",
+                "home_team": "Canada",
+                "away_team": "Morocco",
+                "date": "2022-12-01",
+                "status": "finished",
+                "home_score": 1,
+                "away_score": 2
+            },
+            {
+                "id": "w2026-979138",
+                "home_team": "Croatia",
+                "away_team": "Morocco",
+                "date": "2022-12-17",
+                "status": "finished",
+                "home_score": 2,
+                "away_score": 1
+            }
+        ]
+    },
+    "Group G": {
+        "group_name": "Grupo G",
+        "standings": [
+            {
+                "team": "Brazil",
+                "played": 3,
+                "won": 2,
+                "drawn": 0,
+                "lost": 1,
+                "gf": 3,
+                "ga": 1,
+                "gd": 2,
+                "points": 6
+            },
+            {
+                "team": "Switzerland",
+                "played": 3,
+                "won": 2,
+                "drawn": 0,
+                "lost": 1,
+                "gf": 4,
+                "ga": 3,
+                "gd": 1,
+                "points": 6
+            },
+            {
+                "team": "Cameroon",
+                "played": 3,
+                "won": 1,
+                "drawn": 1,
+                "lost": 1,
+                "gf": 4,
+                "ga": 4,
+                "gd": 0,
+                "points": 4
+            },
+            {
+                "team": "Serbia",
+                "played": 3,
+                "won": 0,
+                "drawn": 1,
+                "lost": 2,
+                "gf": 5,
+                "ga": 8,
+                "gd": -3,
+                "points": 1
+            }
+        ],
+        "matches": [
+            {
+                "id": "w2026-855743",
+                "home_team": "Switzerland",
+                "away_team": "Cameroon",
+                "date": "2022-11-24",
+                "status": "finished",
+                "home_score": 1,
+                "away_score": 0
+            },
+            {
+                "id": "w2026-855746",
+                "home_team": "Brazil",
+                "away_team": "Serbia",
+                "date": "2022-11-24",
+                "status": "finished",
+                "home_score": 2,
+                "away_score": 0
+            },
+            {
+                "id": "w2026-855756",
+                "home_team": "Cameroon",
+                "away_team": "Serbia",
+                "date": "2022-11-28",
+                "status": "finished",
+                "home_score": 3,
+                "away_score": 3
+            },
+            {
+                "id": "w2026-855758",
+                "home_team": "Brazil",
+                "away_team": "Switzerland",
+                "date": "2022-11-28",
+                "status": "finished",
+                "home_score": 1,
+                "away_score": 0
+            },
+            {
+                "id": "w2026-855772",
+                "home_team": "Serbia",
+                "away_team": "Switzerland",
+                "date": "2022-12-02",
+                "status": "finished",
+                "home_score": 2,
+                "away_score": 3
+            },
+            {
+                "id": "w2026-855771",
+                "home_team": "Cameroon",
+                "away_team": "Brazil",
+                "date": "2022-12-02",
+                "status": "finished",
+                "home_score": 1,
+                "away_score": 0
+            }
+        ]
+    },
+    "Group H": {
+        "group_name": "Grupo H",
+        "standings": [
+            {
+                "team": "Portugal",
+                "played": 3,
+                "won": 2,
+                "drawn": 0,
+                "lost": 1,
+                "gf": 6,
+                "ga": 4,
+                "gd": 2,
+                "points": 6
+            },
+            {
+                "team": "South Korea",
+                "played": 3,
+                "won": 1,
+                "drawn": 1,
+                "lost": 1,
+                "gf": 4,
+                "ga": 4,
+                "gd": 0,
+                "points": 4
+            },
+            {
+                "team": "Uruguay",
+                "played": 3,
+                "won": 1,
+                "drawn": 1,
+                "lost": 1,
+                "gf": 2,
+                "ga": 2,
+                "gd": 0,
+                "points": 4
+            },
+            {
+                "team": "Ghana",
+                "played": 3,
+                "won": 1,
+                "drawn": 0,
+                "lost": 2,
+                "gf": 5,
+                "ga": 7,
+                "gd": -2,
+                "points": 3
+            }
+        ],
+        "matches": [
+            {
+                "id": "w2026-855744",
+                "home_team": "Uruguay",
+                "away_team": "South Korea",
+                "date": "2022-11-24",
+                "status": "finished",
+                "home_score": 0,
+                "away_score": 0
+            },
+            {
+                "id": "w2026-855745",
+                "home_team": "Portugal",
+                "away_team": "Ghana",
+                "date": "2022-11-24",
+                "status": "finished",
+                "home_score": 3,
+                "away_score": 2
+            },
+            {
+                "id": "w2026-855757",
+                "home_team": "South Korea",
+                "away_team": "Ghana",
+                "date": "2022-11-28",
+                "status": "finished",
+                "home_score": 2,
+                "away_score": 3
+            },
+            {
+                "id": "w2026-855759",
+                "home_team": "Portugal",
+                "away_team": "Uruguay",
+                "date": "2022-11-28",
+                "status": "finished",
+                "home_score": 2,
+                "away_score": 0
+            },
+            {
+                "id": "w2026-855769",
+                "home_team": "South Korea",
+                "away_team": "Portugal",
+                "date": "2022-12-02",
+                "status": "finished",
+                "home_score": 2,
+                "away_score": 1
+            },
+            {
+                "id": "w2026-855770",
+                "home_team": "Ghana",
+                "away_team": "Uruguay",
+                "date": "2022-12-02",
+                "status": "finished",
+                "home_score": 0,
+                "away_score": 2
+            }
+        ]
+    }
+}
