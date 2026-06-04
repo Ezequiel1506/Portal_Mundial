@@ -2,6 +2,7 @@ import os
 import json
 import requests
 from dotenv import load_dotenv
+import xml.etree.ElementTree as ET
 
 load_dotenv()
 API_KEY = os.getenv("API_SPORTS_KEY")
@@ -22,6 +23,50 @@ REAL_ELO_RATINGS = {
     "Mexico": 1850, "USA": 1840, "South Korea": 1820, "Canada": 1780,
     "Saudi Arabia": 1700, "Costa Rica": 1680, "Bolivia": 1650
 }
+
+NEWS_FILE = "news_cache.json"
+
+def fetch_live_news():
+    print("[INFO] Buscando noticias en vivo de Google News...")
+    # URL del feed de Google Noticias filtrado por "Mundial 2026" en español
+    url = "https://news.google.com/rss/search?q=Mundial+2026+futbol&hl=es-419&gl=AR&ceid=AR:es-419"
+    
+    try:
+        resp = requests.get(url)
+        root = ET.fromstring(resp.content)
+        
+        live_news = []
+        # Extraemos solo las 4 noticias más recientes
+        for idx, item in enumerate(root.findall('./channel/item')[:4]):
+            title = item.find('title').text
+            link = item.find('link').text
+            pubDate = item.find('pubDate').text
+            
+            # Google News manda el título con el formato: "Titular - Nombre del Diario"
+            # Vamos a separarlo para que quede prolijo
+            if " - " in title:
+                clean_title, author = title.rsplit(" - ", 1)
+            else:
+                clean_title = title
+                author = "Agencia de Noticias"
+
+            live_news.append({
+                "id": f"live-news-{idx}",
+                "title": clean_title,
+                "summary": "Haz clic para leer el artículo completo en el portal original.",
+                "category": "Mundial 2026",
+                "author": author,
+                "timestamp": pubDate[5:16], # Cortamos la fecha para mostrar ej: "04 Jun 2026"
+                "is_featured": idx == 0, # Destacamos siempre la más reciente
+                "url": link
+            })
+            
+        with open(NEWS_FILE, "w", encoding="utf-8") as f:
+            json.dump(live_news, f, indent=4, ensure_ascii=False)
+        print("[INFO] ¡Noticias actualizadas exitosamente!")
+        
+    except Exception as e:
+        print(f"[ERROR] No se pudo obtener el feed de noticias: {e}")
 
 def obtener_elo(team_name: str) -> int:
     for key, value in REAL_ELO_RATINGS.items():
@@ -133,3 +178,4 @@ def fetch_world_cup_data():
 
 if __name__ == "__main__":
     fetch_world_cup_data()
+    fetch_live_news() # <-- Agregamos esta línea

@@ -8,16 +8,22 @@ from typing import List
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from predictor import calcular_probabilidades_partido
-from sync_api import fetch_world_cup_data # <-- CAMBIO: Nueva función unificada
+from sync_api import fetch_world_cup_data, fetch_live_news
 
 # --- 0. CONFIGURACIÓN DEL WORKER EN SEGUNDO PLANO ---
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     print("[INFO] Iniciando Motor FastAPI y Worker en segundo plano...")
+    # Ejecutamos todo una vez al arrancar
+    fetch_world_cup_data()
+    fetch_live_news()
+
+# Programamos las actualizaciones automáticas
     scheduler = BackgroundScheduler()
-    scheduler.add_job(fetch_world_cup_data, 'interval', hours=6)
+    scheduler.add_job(fetch_world_cup_data, 'interval', hours=6) # Partidos cada 6 hs
+    scheduler.add_job(fetch_live_news, 'interval', hours=1)      # Noticias cada 1 hs
     scheduler.start()
-    
+
     if not os.path.exists("database_cache.json") or not os.path.exists("groups_cache.json"):
         fetch_world_cup_data()
     yield 
@@ -62,28 +68,7 @@ def get_groups_db():
     with open(GROUPS_FILE, "r", encoding="utf-8") as f: return json.load(f)
 
 # Mock DB de Noticias (Esto lo mantenemos simulado porque API-Sports no da noticias)
-NEWS_DB = [
-    {
-        "id": "n-001", 
-        "title": "El algoritmo predice sorpresas en la fase de grupos",
-        "summary": "Nuestro modelo matemático cruzó los datos de la FIFA y detectó vulnerabilidades en los equipos cabeza de serie.",
-        "category": "Inteligencia Artificial", 
-        "author": "Redacción IA", 
-        "timestamp": "Hace 2 horas", 
-        "is_featured": True,
-        "url": "https://www.espn.com.ar/futbol/mundial/" # <-- Link a ESPN
-    },
-    {
-        "id": "n-002", 
-        "title": "Actualización de Rankings Elo",
-        "summary": "El motor ha recalibrado las métricas de fuerza relativa para todas las selecciones.",
-        "category": "Motor de Datos", 
-        "author": "Sistema", 
-        "timestamp": "Hace 15 min", 
-        "is_featured": False,
-        "url": "https://inside.fifa.com/es/fifa-world-ranking/men" # <-- Link a FIFA
-    }
-]
+
 
 # --- 3. RUTAS Y ENDPOINTS ---
 @app.get("/")
@@ -118,4 +103,10 @@ def get_all_groups():
     return [GroupData(**data) for data in groups_data.values()]
 
 @app.get("/api/news", response_model=List[NewsArticle])
-def get_latest_news(): return [NewsArticle(**news) for news in NEWS_DB]
+def get_news():
+    try:
+        with open("news_cache.json", "r", encoding="utf-8") as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        # Si el archivo todavía no se creó, devolvemos una lista vacía
+        return []
