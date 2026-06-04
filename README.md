@@ -1,59 +1,34 @@
-¡Qué maravilla que ya tengas todos los grupos reales funcionando en la pantalla! Ese es el resultado de un código bien estructurado.
+# Portal Mundial '26 - Arquitectura y Documentación General
 
-Sobre el error al prender el backend: **es el clásico error de olvidar encender el motor del auto antes de acelerar**.
+Este repositorio contiene un sistema *Full-Stack* desacoplado diseñado para simular, predecir y visualizar el torneo del Mundial utilizando Inteligencia Artificial, extracción automática de datos (ETL) y una interfaz de usuario reactiva.
 
-Si abriste una terminal nueva, entraste a la carpeta `backend` y tiraste `uvicorn` directo, la terminal no sabe qué es eso porque **te faltó activar el entorno virtual**. El entorno virtual (`venv`) es la "burbuja" donde instalamos todas nuestras librerías (FastAPI, uvicorn, requests, etc.). Si no entrás a la burbuja primero, Windows te tira error.
+## Topología del Sistema
 
-Acá te dejo el "Ritual de Encendido" definitivo para que lo tengas a mano siempre que te sientes a programar:
+El proyecto está diseñado bajo una arquitectura de microservicios:
 
-### ⚙️ Terminal 1: Encender el Backend (La Burbuja de Python)
+1. **Backend (`/backend`)**: Motor de procesamiento en Python (FastAPI). 
+   - **Responsabilidad**: Extracción de datos de API-Sports, limpieza, almacenamiento en caché local, cálculo de probabilidades mediante Distribución de Poisson y exposición de endpoints REST.
+   - **Infraestructura**: Desplegado como un Web Service en **Render** para soportar procesos en segundo plano (workers) y cálculos matemáticos pesados.
 
-Abre tu primera terminal (Git Bash) y ejecuta esto línea por línea:
+2. **Frontend (`/frontend`)**: Interfaz de usuario en React (Next.js).
+   - **Responsabilidad**: Consumo de la API interna, renderizado del lado del servidor (SSR) para SEO y velocidad, y manejo de estado del lado del cliente para la interactividad.
+   - **Infraestructura**: Desplegado en la CDN global de **Vercel** para garantizar una entrega estática e instantánea a los usuarios.
 
-1. **Entrar a la carpeta:**
+## Despliegue Local (Quick Start)
+
+Para iniciar el entorno de desarrollo local, se requieren dos terminales:
+
+**Terminal 1 (Motor API):**
 ```bash
-cd ~/Desktop/portal-mundial/backend
-
-```
-
-
-2. **Activar la burbuja (¡El paso que te faltó!):**
-```bash
+cd backend
 source venv/Scripts/activate
-
-```
-
-
-*(Vas a saber que funcionó porque te aparecerá un `(venv)` escrito al principio de tu línea de comandos).*
-3. **Encender el servidor:**
-```bash
+pip install -r requirements.txt
 uvicorn main:app --reload
-
 ```
 
-
-
----
-
-### 🎨 Terminal 2: Encender el Frontend (La Interfaz Web)
-
-Abre una **segunda** terminal (Git Bash) totalmente nueva y ejecuta:
-
-1. **Entrar a la carpeta:**
+**Terminal 2 (Interfaz Web):**
 ```bash
-cd ~/Desktop/portal-mundial/frontend
-
-```
-
-
-2. **Encender la web:**
-```bash
+cd frontend
+npm install
 npm run dev
-
 ```
-
-
-
-¡Y listo! Ya podés ir a **`http://localhost:3000`** en tu navegador y ver tu obra de arte corriendo al 100%.
-
-Una vez que lo tengas levantado y me des el ok, ¿te parece si empezamos a preparar las cuentas de **GitHub** para subir este código a la nube y que el mundo lo vea?

@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Manual Técnico - Frontend (Interfaz de Usuario)
 
-## Getting Started
+Este módulo es responsable de la presentación visual y la interactividad. Está construido con **Next.js (App Router)**, **React** y **Tailwind CSS**. 
 
-First, run the development server:
+El flujo de datos va siempre en una sola dirección: la página principal obtiene los datos de la API de Python y los "pasa hacia abajo" (props) a los componentes visuales.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Archivo: `src/app/page.tsx` (El Orquestador)
+Es el componente principal (Server Component). No tiene estado propio, su trabajo es armar la página antes de enviarla al navegador del usuario.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+* **Funciones de Fetch (`getMatchCenterData`, `getGroupsData`, `getNewsData`)**:
+  - Funciones asíncronas que se comunican con la API de Render usando el estándar `fetch`. Utilizan `{ cache: 'no-store' }` para asegurar que siempre traigan el dato más reciente sin guardar caché intermedia que estanque la predicción.
+* **Componente `Home(props)`**:
+  - Lee los parámetros de la URL (`searchParams.matchId`) para saber qué partido eligió el usuario.
+  - Ejecuta las llamadas a la API en paralelo usando `Promise.all` para reducir drásticamente el tiempo de carga.
+  - Tiene un bloque `try/catch` envolvente. Si la API de Python cae o falla, el `catch` intercepta el error y muestra una "Pantalla de Diagnóstico" roja con detalles del fallo, en lugar de colgar toda la web.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Archivo: `src/components/MatchSelector.tsx` (El Controlador)
+Es el único componente marcado con `"use client"` que afecta directamente la navegación.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* **Hooks utilizados**: Usa `useRouter` y `useSearchParams` de Next.js para manipular la URL sin recargar el navegador.
+* **`handleSelect`**: Función que se dispara cuando el usuario cambia la opción del menú desplegable. Toma el ID del nuevo partido (ej. `w2026-12345`) y ejecuta un `router.push(/?matchId=...)`. Esto le avisa al `page.tsx` que debe volver a calcular todo con el nuevo ID.
 
-## Learn More
+## Componentes Visuales (Widgets)
+Estos archivos son "tontos" (Dumb Components). No piden datos a internet ni tienen lógica compleja, simplemente reciben objetos JSON (Props) y los transforman en código HTML/Tailwind.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* **`PredictionWidget.tsx`**: Recibe las probabilidades (ej. 54%) y los marcadores del Top 3 calculados por Poisson. Usa Tailwind para dibujar la barra de progreso tricolor y las tarjetas de resultados.
+* **`LineupWidget.tsx`**: Recibe las formaciones (ej. "4-3-3") y un array de jugadores (con interfaces TypeScript asegurando que tengan `name: string` y `number: number`). Mapea estos datos en formato de lista.
+* **`GroupsWidget.tsx`**: Recibe el array gigantesco de los 8 grupos. Utiliza `.map()` dos veces: primero para iterar sobre cada grupo (dibujando la tabla), y luego sobre la lista de partidos de ese grupo (dibujando el fixture inferior).
+* **`NewsWidget.tsx`**: Itera sobre las noticias y renderiza tarjetas informativas, diferenciando visualmente (con un tag) si una noticia tiene la bandera `is_featured: true`.
