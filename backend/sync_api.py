@@ -3,6 +3,7 @@ import json
 import requests
 from dotenv import load_dotenv
 import xml.etree.ElementTree as ET
+from datetime import datetime, timedelta
 
 load_dotenv()
 API_KEY = os.getenv("API_SPORTS_KEY")
@@ -94,6 +95,20 @@ def fetch_world_cup_data():
         match_id = f"w2026-{match['fixture']['id']}"
         home_team = match["teams"]["home"]["name"]
         away_team = match["teams"]["away"]["name"]
+
+        # --- NUEVO: Procesamiento de fecha y hora a UTC-3 ---
+        raw_date = match["fixture"]["date"] # Ej: "2026-06-11T16:00:00+00:00"
+        try:
+            # Leemos la hora en UTC (cortando los últimos caracteres de zona)
+            utc_dt = datetime.strptime(raw_date[:19], "%Y-%m-%dT%H:%M:%S")
+            # Restamos 3 horas para el huso horario de Argentina (UTC-3)
+            local_dt = utc_dt - timedelta(hours=3)
+            # Le damos formato lindo, ej: "11/06 13:00 hs"
+            formatted_date = local_dt.strftime("%d/%m %H:%M hs")
+        except Exception:
+            # Plan B por si la API cambia el formato
+            formatted_date = raw_date[:10] 
+        # ----------------------------------------------------
         
         elo_home_real = obtener_elo(home_team)
         elo_away_real = obtener_elo(away_team)
@@ -120,6 +135,7 @@ def fetch_world_cup_data():
             "home_team": home_team,
             "away_team": away_team,
             "date": match["fixture"]["date"][:10],
+            "date": formatted_date,
             "status": "upcoming" if match["fixture"]["status"]["short"] == "NS" else "finished",
             "home_score": match["goals"]["home"],
             "away_score": match["goals"]["away"]
