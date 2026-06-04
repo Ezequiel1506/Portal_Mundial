@@ -5,19 +5,19 @@ import NewsWidget from '@/components/NewsWidget';
 import MatchSelector from '@/components/MatchSelector';
 
 async function getMatchCenterData(matchId: string) {
-  const res = await fetch(`http://127.0.0.1:8000/api/match/${matchId}`, { cache: 'no-store' });
+  const res = await fetch(`https://portal-mundial.onrender.com/api/match/${matchId}`, { cache: 'no-store' });
   if (!res.ok) throw new Error(`Error en API de Partido (Status: ${res.status})`);
   return res.json();
 }
 
 async function getGroupsData() {
-  const res = await fetch(`http://127.0.0.1:8000/api/groups`, { cache: 'no-store' });
+  const res = await fetch(`https://portal-mundial.onrender.com/api/groups`, { cache: 'no-store' });
   if (!res.ok) throw new Error(`Error en API de Grupos (Status: ${res.status})`);
   return res.json();
 }
 
 async function getNewsData() {
-  const res = await fetch(`http://127.0.0.1:8000/api/news`, { cache: 'no-store' });
+  const res = await fetch(`https://portal-mundial.onrender.com/api/news`, { cache: 'no-store' });
   if (!res.ok) throw new Error(`Error en API de Noticias (Status: ${res.status})`);
   return res.json();
 }
