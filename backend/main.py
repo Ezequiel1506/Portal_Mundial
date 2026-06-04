@@ -110,3 +110,11 @@ def get_news():
     except (FileNotFoundError, json.JSONDecodeError):
         # Si el archivo todavía no se creó, devolvemos una lista vacía
         return []
+
+@app.get("/api/knockouts")
+def get_knockouts():
+    try:
+        with open("knockout_cache.json", "r", encoding="utf-8") as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []

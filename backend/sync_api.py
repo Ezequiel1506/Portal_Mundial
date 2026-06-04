@@ -90,11 +90,38 @@ def fetch_world_cup_data():
     
     new_matches_db = {}
     matches_list_for_groups = []
+
+    new_matches_db = {}
+    matches_list_for_groups = []
+    knockout_matches = [] # <-- NUEVA LISTA PARA EL CUADRO
     
     for match in matches:
         match_id = f"w2026-{match['fixture']['id']}"
         home_team = match["teams"]["home"]["name"]
         away_team = match["teams"]["away"]["name"]
+
+        # --- NUEVO: Detección de Fase Eliminatoria ---
+        round_name = str(match["league"]["round"])
+        fase_traducida = ""
+        
+        if "Round of 16" in round_name: fase_traducida = "Octavos de Final"
+        elif "Quarter-finals" in round_name: fase_traducida = "Cuartos de Final"
+        elif "Semi-finals" in round_name: fase_traducida = "Semifinales"
+        elif "3rd Place" in round_name: fase_traducida = "Tercer Puesto"
+        elif "Final" in round_name: fase_traducida = "Gran Final"
+        
+        if fase_traducida != "":
+            knockout_matches.append({
+                "id": match_id,
+                "round": fase_traducida,
+                "home_team": home_team,
+                "away_team": away_team,
+                "date": formatted_date,
+                "status": "upcoming" if match["fixture"]["status"]["short"] == "NS" else "finished",
+                "home_score": match["goals"]["home"],
+                "away_score": match["goals"]["away"]
+            })
+        # ---------------------------------------------
 
         # --- NUEVO: Procesamiento de fecha y hora a UTC-3 ---
         raw_date = match["fixture"]["date"] # Ej: "2026-06-11T16:00:00+00:00"
@@ -189,6 +216,11 @@ def fetch_world_cup_data():
             
     with open(GROUPS_FILE, "w", encoding="utf-8") as f:
         json.dump(groups_db, f, indent=4, ensure_ascii=False)
+
+
+    # Guardamos el cuadro eliminatorio
+    with open("knockout_cache.json", "w", encoding="utf-8") as f:
+        json.dump(knockout_matches, f, indent=4, ensure_ascii=False)
 
     print("[INFO] ¡Sincronización Total Exitosa! Partidos y Tablas guardadas.")
 

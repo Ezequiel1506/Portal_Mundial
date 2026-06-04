@@ -3,6 +3,7 @@ import LineupWidget from '@/components/LineupWidget';
 import GroupsWidget from '@/components/GroupsWidget';
 import NewsWidget from '@/components/NewsWidget';
 import MatchSelector from '@/components/MatchSelector';
+import BracketWidget from '@/components/BracketWidget';
 
 async function getMatchCenterData(matchId: string) {
   const res = await fetch(`https://portal-mundial.onrender.com/api/match/${matchId}`, { cache: 'no-store' });
@@ -22,14 +23,21 @@ async function getNewsData() {
   return res.json();
 }
 
+async function getKnockoutsData() {
+  const res = await fetch(`https://portal-mundial.onrender.com/api/knockouts`, { cache: 'no-store' });
+  if (!res.ok) return [];
+  return res.json();
+}
+
 export default async function Home(props: any) {
   try {
     const searchParams = await props.searchParams;
     const urlMatchId = searchParams?.matchId;
 
-    const [groupsData, newsData] = await Promise.all([
+    const [groupsData, newsData, knockoutsData] = await Promise.all([
       getGroupsData(),
-      getNewsData()
+      getNewsData(),
+      getKnockoutsData()
     ]);
 
     // Verificación de seguridad por si las tablas vinieron vacías
@@ -81,6 +89,10 @@ export default async function Home(props: any) {
 
           <section>
             <GroupsWidget groups={groupsData} />
+          </section>
+
+          <section>
+            <BracketWidget knockouts={knockoutsData} /> {/* <-- NUEVO WIDGET */}
           </section>
 
           <section>

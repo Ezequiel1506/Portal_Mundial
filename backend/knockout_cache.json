@@ -1,0 +1,162 @@
+[
+    {
+        "id": "w2026-976533",
+        "round": "Octavos de Final",
+        "home_team": "Netherlands",
+        "away_team": "USA",
+        "date": "02/12 16:00 hs",
+        "status": "finished",
+        "home_score": 3,
+        "away_score": 1
+    },
+    {
+        "id": "w2026-976642",
+        "round": "Octavos de Final",
+        "home_team": "Argentina",
+        "away_team": "Australia",
+        "date": "03/12 12:00 hs",
+        "status": "finished",
+        "home_score": 2,
+        "away_score": 1
+    },
+    {
+        "id": "w2026-976643",
+        "round": "Octavos de Final",
+        "home_team": "France",
+        "away_team": "Poland",
+        "date": "03/12 16:00 hs",
+        "status": "finished",
+        "home_score": 3,
+        "away_score": 1
+    },
+    {
+        "id": "w2026-976534",
+        "round": "Octavos de Final",
+        "home_team": "England",
+        "away_team": "Senegal",
+        "date": "04/12 12:00 hs",
+        "status": "finished",
+        "home_score": 3,
+        "away_score": 0
+    },
+    {
+        "id": "w2026-977344",
+        "round": "Octavos de Final",
+        "home_team": "Japan",
+        "away_team": "Croatia",
+        "date": "04/12 16:00 hs",
+        "status": "finished",
+        "home_score": 1,
+        "away_score": 1
+    },
+    {
+        "id": "w2026-977705",
+        "round": "Octavos de Final",
+        "home_team": "Brazil",
+        "away_team": "South Korea",
+        "date": "05/12 12:00 hs",
+        "status": "finished",
+        "home_score": 4,
+        "away_score": 1
+    },
+    {
+        "id": "w2026-977345",
+        "round": "Octavos de Final",
+        "home_team": "Morocco",
+        "away_team": "Spain",
+        "date": "05/12 16:00 hs",
+        "status": "finished",
+        "home_score": 0,
+        "away_score": 0
+    },
+    {
+        "id": "w2026-977706",
+        "round": "Octavos de Final",
+        "home_team": "Portugal",
+        "away_team": "Switzerland",
+        "date": "06/12 12:00 hs",
+        "status": "finished",
+        "home_score": 6,
+        "away_score": 1
+    },
+    {
+        "id": "w2026-978072",
+        "round": "Cuartos de Final",
+        "home_team": "Croatia",
+        "away_team": "Brazil",
+        "date": "06/12 16:00 hs",
+        "status": "finished",
+        "home_score": 1,
+        "away_score": 1
+    },
+    {
+        "id": "w2026-977794",
+        "round": "Cuartos de Final",
+        "home_team": "Netherlands",
+        "away_team": "Argentina",
+        "date": "09/12 12:00 hs",
+        "status": "finished",
+        "home_score": 2,
+        "away_score": 2
+    },
+    {
+        "id": "w2026-978088",
+        "round": "Cuartos de Final",
+        "home_team": "Morocco",
+        "away_team": "Portugal",
+        "date": "09/12 16:00 hs",
+        "status": "finished",
+        "home_score": 1,
+        "away_score": 0
+    },
+    {
+        "id": "w2026-978036",
+        "round": "Cuartos de Final",
+        "home_team": "England",
+        "away_team": "France",
+        "date": "10/12 12:00 hs",
+        "status": "finished",
+        "home_score": 1,
+        "away_score": 2
+    },
+    {
+        "id": "w2026-978279",
+        "round": "Semifinales",
+        "home_team": "Argentina",
+        "away_team": "Croatia",
+        "date": "10/12 16:00 hs",
+        "status": "finished",
+        "home_score": 3,
+        "away_score": 0
+    },
+    {
+        "id": "w2026-978488",
+        "round": "Semifinales",
+        "home_team": "France",
+        "away_team": "Morocco",
+        "date": "13/12 16:00 hs",
+        "status": "finished",
+        "home_score": 2,
+        "away_score": 0
+    },
+    {
+        "id": "w2026-979138",
+        "round": "Tercer Puesto",
+        "home_team": "Croatia",
+        "away_team": "Morocco",
+        "date": "14/12 16:00 hs",
+        "status": "finished",
+        "home_score": 2,
+        "away_score": 1
+    },
+    {
+        "id": "w2026-979139",
+        "round": "Gran Final",
+        "home_team": "Argentina",
+        "away_team": "France",
+        "date": "17/12 12:00 hs",
+        "status": "finished",
+        "home_score": 3,
+        "away_score": 3
+    }
+]
