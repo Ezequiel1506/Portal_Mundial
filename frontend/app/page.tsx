@@ -43,10 +43,14 @@ export default async function Home(props: any) {
       throw new Error("La API de grupos respondió con una lista vacía. Revisá los archivos caché del backend.");
     }
 
-    const allMatches = groupsData.flatMap((g: any) => g.matches);
+   // 1. Extraemos todos los partidos de la fase de grupos
+    const groupMatches = groupsData.flatMap((g: any) => g.matches);
+    
+    // 2. FUSIONAMOS los grupos con la fase eliminatoria usando el Spread Operator (...) de JavaScript
+    const allMatches = [...groupMatches, ...knockoutsData];
     
     if (!allMatches || allMatches.length === 0) {
-      throw new Error("No se encontraron partidos dentro de los grupos cargados.");
+      throw new Error("No se encontraron partidos cargados en la base de datos.");
     }
 
     const matchIdToPredict = urlMatchId || allMatches[0].id;
