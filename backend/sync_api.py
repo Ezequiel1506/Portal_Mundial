@@ -37,7 +37,7 @@ def fetch_live_news():
         
         live_news = []
         # Extraemos solo las 4 noticias más recientes
-        for idx, item in enumerate(root.findall('./channel/item')[:4]):
+        for idx, item in enumerate(root.findall('./channel/item')[:20]):
             title = item.find('title').text
             link = item.find('link').text
             pubDate = item.find('pubDate').text
