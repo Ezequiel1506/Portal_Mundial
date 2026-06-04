@@ -47,7 +47,7 @@ class MatchCenterPayload(BaseModel): match_id: str; home_team: str; away_team: s
 class TeamStanding(BaseModel): team: str; played: int; won: int; drawn: int; lost: int; gf: int; ga: int; gd: int; points: int
 class MatchSimple(BaseModel): id: str; home_team: str; away_team: str; date: str; status: str; home_score: int | None = None; away_score: int | None = None
 class GroupData(BaseModel): group_name: str; standings: List[TeamStanding]; matches: List[MatchSimple]
-class NewsArticle(BaseModel): id: str; title: str; summary: str; category: str; author: str; timestamp: str; is_featured: bool
+class NewsArticle(BaseModel): id: str; title: str; summary: str; category: str; author: str; timestamp: str; is_featured: bool; url: str
 
 # --- 2. LECTURA DE CACHÉ ---
 DB_FILE = "database_cache.json"
@@ -64,14 +64,24 @@ def get_groups_db():
 # Mock DB de Noticias (Esto lo mantenemos simulado porque API-Sports no da noticias)
 NEWS_DB = [
     {
-        "id": "n-001", "title": "El algoritmo predice sorpresas en la fase de grupos",
+        "id": "n-001", 
+        "title": "El algoritmo predice sorpresas en la fase de grupos",
         "summary": "Nuestro modelo matemático cruzó los datos de la FIFA y detectó vulnerabilidades en los equipos cabeza de serie.",
-        "category": "Inteligencia Artificial", "author": "Redacción IA", "timestamp": "Hace 2 horas", "is_featured": True
+        "category": "Inteligencia Artificial", 
+        "author": "Redacción IA", 
+        "timestamp": "Hace 2 horas", 
+        "is_featured": True,
+        "url": "https://www.espn.com.ar/futbol/mundial/" # <-- Link a ESPN
     },
     {
-        "id": "n-002", "title": "Actualización de Rankings Elo",
+        "id": "n-002", 
+        "title": "Actualización de Rankings Elo",
         "summary": "El motor ha recalibrado las métricas de fuerza relativa para todas las selecciones.",
-        "category": "Motor de Datos", "author": "Sistema", "timestamp": "Hace 15 min", "is_featured": False
+        "category": "Motor de Datos", 
+        "author": "Sistema", 
+        "timestamp": "Hace 15 min", 
+        "is_featured": False,
+        "url": "https://inside.fifa.com/es/fifa-world-ranking/men" # <-- Link a FIFA
     }
 ]
 
