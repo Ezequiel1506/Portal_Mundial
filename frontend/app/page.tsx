@@ -1,5 +1,4 @@
 import PredictionWidget from '@/components/PredictionWidget';
-import LineupWidget from '@/components/LineupWidget';
 import GroupsWidget from '@/components/GroupsWidget';
 import NewsWidget from '@/components/NewsWidget';
 import MatchSelector from '@/components/MatchSelector';
@@ -40,7 +39,6 @@ export default async function Home(props: any) {
       getKnockoutsData()
     ]);
 
-    // Verificación de seguridad por si las tablas vinieron vacías
     if (!groupsData || groupsData.length === 0) {
       throw new Error("La API de grupos respondió con una lista vacía. Revisá los archivos caché del backend.");
     }
@@ -84,7 +82,7 @@ export default async function Home(props: any) {
             </div>
             
             <PredictionWidget data={matchData.prediction} homeTeam={matchData.home_team} awayTeam={matchData.away_team} />
-            <LineupWidget lineups={matchData.lineups} homeTeam={matchData.home_team} awayTeam={matchData.away_team} />
+            {/* Las alineaciones han sido removidas de este bloque */}
           </section>
 
           <section>
@@ -92,7 +90,7 @@ export default async function Home(props: any) {
           </section>
 
           <section>
-            <BracketWidget knockouts={knockoutsData} /> {/* <-- NUEVO WIDGET */}
+            <BracketWidget knockouts={knockoutsData} />
           </section>
 
           <section>
@@ -103,7 +101,6 @@ export default async function Home(props: any) {
       </main>
     );
   } catch (error: any) {
-    // NUEVO: Pantalla de diagnóstico avanzado
     return (
       <main className="min-h-screen bg-slate-950 p-8 flex items-center justify-center">
         <div className="bg-red-500/10 border border-red-500 text-red-500 p-8 rounded-2xl max-w-xl w-full shadow-2xl">
