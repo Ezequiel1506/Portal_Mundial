@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { BarChart3, Target, BrainCircuit, Activity } from 'lucide-react';
-import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend } from 'recharts';
+// Importamos el Tooltip de recharts
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 
 export default function PredictionWidget({ data, homeTeam, awayTeam }: { data: any, homeTeam: string, awayTeam: string }) {
   if (!data) return null;
@@ -95,66 +96,82 @@ export default function PredictionWidget({ data, homeTeam, awayTeam }: { data: a
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-slate-800/60 pt-6">
-        <div className="bg-slate-950 border border-slate-850 p-5 rounded-xl flex flex-col justify-between shadow-md">
-          <p className="text-xs text-slate-500 font-bold tracking-widest mb-4 uppercase flex items-center gap-2">
-            <Target className="w-4 h-4 text-blue-400" /> Resultados Más Probables
-          </p>
-          <div className="flex gap-3">
-            {data.most_likely_scores.map((score: string, i: number) => (
-              <div key={i} className="bg-slate-900 border border-slate-800 px-4 py-3 rounded-xl font-mono text-xl font-black text-white shadow-md text-center flex-1">
-                {score}
-              </div>
-            ))}
+      {/* NUEVA ESTRUCTURA DE LAYOUT */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 border-t border-slate-800/60 pt-6">
+        
+        {/* COLUMNA IZQUIERDA: Resultados + Narrativa apilados */}
+        <div className="flex flex-col gap-6">
+          {/* Caja 1: Marcadores */}
+          <div className="bg-slate-950 border border-slate-850 p-5 rounded-xl shadow-md">
+            <p className="text-xs text-slate-500 font-bold tracking-widest mb-4 uppercase flex items-center gap-2">
+              <Target className="w-4 h-4 text-blue-400" /> Resultados Más Probables
+            </p>
+            <div className="flex gap-3">
+              {data.most_likely_scores.map((score: string, i: number) => (
+                <div key={i} className="bg-slate-900 border border-slate-800 px-4 py-3 rounded-xl font-mono text-xl font-black text-white shadow-md text-center flex-1">
+                  {score}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Caja 2: Justificación */}
+          <div className="bg-slate-950 border border-slate-850 p-5 rounded-xl flex-1 shadow-md">
+            <p className="text-xs text-slate-500 font-bold tracking-widest mb-4 uppercase flex items-center gap-2">
+              <BrainCircuit className="w-4 h-4 text-emerald-400" /> Justificación de la IA
+            </p>
+            <p className="text-sm text-slate-300 leading-relaxed font-medium">
+              {generateNarrative()}
+            </p>
           </div>
         </div>
 
-        <div className="bg-slate-950 border border-slate-850 p-5 rounded-xl flex flex-col justify-between shadow-md">
-          <p className="text-xs text-slate-500 font-bold tracking-widest mb-4 uppercase flex items-center gap-2">
-            <BrainCircuit className="w-4 h-4 text-emerald-400" /> Justificación de la IA
+        {/* COLUMNA DERECHA: Gráfico de Radar ocupando todo el alto */}
+        <div className="bg-slate-950 border border-slate-850 p-5 rounded-xl shadow-md flex flex-col min-h-[350px]">
+          <p className="text-xs text-slate-500 font-bold tracking-widest mb-2 uppercase flex items-center justify-center gap-2">
+            <Activity className="w-4 h-4 text-purple-400" /> Comparativa de Fuerzas
           </p>
-          <p className="text-sm text-slate-300 leading-relaxed font-medium">
-            {generateNarrative()}
-          </p>
+          
+          <div className="flex-1 w-full relative">
+            <ResponsiveContainer width="100%" height="100%">
+              <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
+                <PolarGrid stroke="#334155" />
+                <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 12, fontWeight: 600 }} />
+                <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
+                
+                {/* TOOLTIP ACTIVADO: Se muestra al pasar el mouse por los puntos */}
+                <Tooltip 
+                  contentStyle={{ backgroundColor: '#020617', borderColor: '#1e293b', borderRadius: '0.75rem', color: '#f8fafc' }}
+                  itemStyle={{ fontWeight: 'bold' }}
+                />
+                
+                <Radar 
+                  name={homeTeam} 
+                  dataKey="home" 
+                  stroke="#3b82f6" 
+                  fill="#3b82f6" 
+                  fillOpacity={0.4} 
+                  activeDot={{ r: 6 }} 
+                />
+                <Radar 
+                  name={awayTeam} 
+                  dataKey="away" 
+                  stroke="#ef4444" 
+                  fill="#ef4444" 
+                  fillOpacity={0.4} 
+                  activeDot={{ r: 6 }}
+                />
+                
+                <Legend 
+                  wrapperStyle={{ paddingTop: '10px', fontSize: '13px', fontWeight: 'bold' }} 
+                  iconType="circle" 
+                />
+              </RadarChart>
+            </ResponsiveContainer>
+          </div>
         </div>
-      </div>
 
-      <div className="mt-6 bg-slate-950 border border-slate-850 p-6 rounded-xl shadow-md">
-        <p className="text-xs text-slate-500 font-bold tracking-widest mb-6 uppercase flex items-center justify-center gap-2">
-          <Activity className="w-4 h-4 text-purple-400" /> Comparativa de Fuerzas
-        </p>
-        
-        <div className="h-72 w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <RadarChart cx="50%" cy="50%" outerRadius="75%" data={radarData}>
-              <PolarGrid stroke="#334155" />
-              <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 12, fontWeight: 600 }} />
-              <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
-              
-              <Radar 
-                name={homeTeam} 
-                dataKey="home" 
-                stroke="#3b82f6" 
-                fill="#3b82f6" 
-                fillOpacity={0.4} 
-              />
-              <Radar 
-                name={awayTeam} 
-                dataKey="away" 
-                stroke="#ef4444" 
-                fill="#ef4444" 
-                fillOpacity={0.4} 
-              />
-              
-              <Legend 
-                wrapperStyle={{ paddingTop: '20px', fontSize: '13px', fontWeight: 'bold' }} 
-                iconType="circle" 
-              />
-            </RadarChart>
-          </ResponsiveContainer>
-        </div>
       </div>
-
     </div>
   );
 }
